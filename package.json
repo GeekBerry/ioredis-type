@@ -2,8 +2,28 @@
   "name": "ioredis-type",
   "version": "0.0.0",
   "description": "redis type orm",
-  "main": "index.js",
+  "keywords": [
+    "redis",
+    "type",
+    "orm"
+  ],
+  "main": "src/index.js",
   "author": "geekberry@qq.com",
   "license": "MIT",
-  "repository": "https://github.com/GeekBerry/ioredis-type.git"
+  "repository": "https://github.com/GeekBerry/ioredis-type.git",
+  "files": [
+    "src",
+    "yarn.lock"
+  ],
+  "dependencies": {
+    "ioredis": "^4.14.1",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
+  },
+  "scripts": {
+    "test": "jest --runInBand",
+    "test:cov": "jest --runInBand --coverage"
+  }
 }
