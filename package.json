@@ -1,0 +1,9 @@
+{
+  "name": "ioredis-type",
+  "version": "0.0.0",
+  "description": "redis type orm",
+  "main": "index.js",
+  "author": "geekberry@qq.com",
+  "license": "MIT",
+  "repository": "https://github.com/GeekBerry/ioredis-type.git"
+}
