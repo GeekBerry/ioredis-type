@@ -32,7 +32,7 @@ class HashTableValue extends Value {
    * @param number {number}
    * @return {Promise<number>} after number
    */
-  async inc(key, number) {
+  async inc(key, number = 1) {
     if (!lodash.isNumber(number)) {
       throw new Error(`inc value must be a number, got ${number}`);
     }

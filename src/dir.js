@@ -3,6 +3,7 @@ const ListValue = require('./list');
 const SortedSetValue = require('./zset');
 const HashTableValue = require('./table');
 const MapValue = require('./map');
+const NumberValue = require('./number');
 
 class DirectoryType extends Type {
   pathOf(key) {
@@ -38,6 +39,10 @@ class DirectoryType extends Type {
 
   Map(key) {
     return new MapValue(this.ioredis, this.pathOf(key));
+  }
+
+  Number(key) {
+    return new NumberValue(this.ioredis, this.pathOf(key));
   }
 }
 
