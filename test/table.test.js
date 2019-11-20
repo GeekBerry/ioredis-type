@@ -7,7 +7,11 @@ beforeAll(async () => {
 test('Table', async () => {
   const table = redis.root.Table('table');
 
+  expect(await table.exists()).toEqual(false);
+  expect(await table.select()).toEqual({});
+
   expect(await table.insert()).toEqual(false);
+  expect(await table.exists()).toEqual(false);
 
   await table.insert({
     t: true,
@@ -18,6 +22,7 @@ test('Table', async () => {
     i: 0,
     a: ['A', 'B,C'],
   });
+  expect(await table.exists()).toEqual(true);
 
   const created = await table.select();
   expect(created.t).toEqual('true');
@@ -54,7 +59,7 @@ test('Table', async () => {
   expect(await table.inc('i', 1)).toEqual(2);
   expect(await table.inc('i', -2.5)).toEqual(-0.5);
 
-  await expect(table.inc(NaN)).rejects.toThrow('inc value must be a number');
+  await expect(table.inc('i', NaN)).rejects.toThrow('expect a finite number');
 
   expect(await table.has('key')).toEqual(false);
   expect(await table.get('key')).toEqual(undefined);
@@ -64,8 +69,6 @@ test('Table', async () => {
   expect(await table.del('key')).toEqual(1);
   expect(await table.del('key')).toEqual(0);
   expect(await table.del()).toEqual(0);
-
-  expect(await redis.root.Table('notExist').select()).toEqual(undefined);
 });
 
 afterAll(() => {

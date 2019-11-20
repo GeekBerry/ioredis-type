@@ -15,7 +15,7 @@ test('List', async () => {
   expect(await list.pop(2)).toEqual(['e', 'd']);
   expect(await list.pop(0)).toEqual([]);
   expect(await list.pop(1)).toEqual(['c']);
-  await expect(list.pop(-1)).rejects.toThrow('Pop count must be positive integer');
+  await expect(list.pop(-1)).rejects.toThrow('expect a positive integer');
   expect(await list.pop(1000)).toEqual(['b', 'a']);
   expect(await list.pop()).toEqual(undefined);
   expect(await list.pop(10)).toEqual([]);

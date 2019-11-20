@@ -20,6 +20,24 @@ const redis = new Redis({
 });
 ```
 
+### Number
+
+```javascript
+async function main() {
+  const number = redis.root.Number('number');
+
+  await number.set(10);
+  
+  await number.get(); // 10
+  
+  await number.inc(-1); // 9
+}
+
+main().finally(() => redis.close())
+```
+
+[test example](https://github.com/GeekBerry/ioredis-type/blob/master/test/number.test.js)
+
 ### List
 
 ```javascript
@@ -37,8 +55,10 @@ async function main() {
   await list.index(-4);
 }
 
-main().catch(()=>redis.close())
+main().finally(() => redis.close())
 ```
+
+[test example](https://github.com/GeekBerry/ioredis-type/blob/master/test/list.test.js)
 
 ### ZSet
 
@@ -60,8 +80,10 @@ async function main() {
   await zset.index(-4);
 }
 
-main().catch(()=>redis.close())
+main().finally(() => redis.close())
 ```
+
+[test example](https://github.com/GeekBerry/ioredis-type/blob/master/test/zset.test.js)
 
 ### Table
 
@@ -82,5 +104,23 @@ async function main() {
   await table.select();
 }
 
-main().catch(()=>redis.close())
+main().finally(() => redis.close())
 ```
+
+[test example](https://github.com/GeekBerry/ioredis-type/blob/master/test/table.test.js)
+
+### Dir
+
+```javascript
+async function main() {
+  const dirA = redis.root.Dir('A');
+  const dirAa = dirA.Dir('a');
+  
+  await dirA.Number('num').set(10);
+  await dirAa.Number('num').set(100);
+}
+
+main().finally(() => redis.close())
+```
+
+[test example](https://github.com/GeekBerry/ioredis-type/blob/master/test/dir.test.js)

@@ -13,8 +13,8 @@ class DirectoryType extends Type {
     return this.key ? `${this.key}/${key}` : `${key}`;
   }
 
-  has(key) {
-    return this.ioredis.exists(this.pathOf(key));
+  async has(key) {
+    return Boolean(await this.ioredis.exists(this.pathOf(key)));
   }
 
   del(key) {

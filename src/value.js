@@ -1,6 +1,15 @@
 const Type = require('./type');
 
 class Value extends Type {
+  async set(value) {
+    const ret = await this.ioredis.set(this.key, value);
+    return ret === 'OK';
+  }
+
+  async get() {
+    return this.ioredis.get(this.key);
+  }
+
   async exists() {
     return Boolean(await this.ioredis.exists(this.key));
   }

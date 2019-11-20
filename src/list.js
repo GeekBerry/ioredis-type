@@ -26,7 +26,7 @@ class ListValue extends Value {
 
     // XXX: popMany, return array
     if (!Number.isInteger(count) || !(count >= 0)) {
-      throw new Error(`Pop count must be positive integer, got "${count}"`);
+      throw new Error(`expect a positive integer, got "${count}"`);
     }
     if (count === 0) {
       return [];

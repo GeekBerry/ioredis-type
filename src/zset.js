@@ -48,8 +48,8 @@ class SortedSetValue extends Value {
    * @return {Promise<number>}
    */
   async delScore(scope) {
-    if (!lodash.isNumber(scope)) {
-      throw new Error(`scope must be a number, got ${scope}`);
+    if (!Number.isFinite(scope)) {
+      throw new Error(`expect a finite number, got ${scope}`);
     }
     return this.remove({ min: scope, max: scope });
   }

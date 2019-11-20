@@ -1,22 +1,21 @@
-const lodash = require('lodash');
 const Value = require('./value');
 
 class NumberValue extends Value {
   async set(number) {
-    if (!lodash.isNumber(number)) {
-      throw new Error(`must be a number, got ${number}`);
+    if (!Number.isFinite(number)) {
+      throw new Error(`expect a finite number, got ${number}`);
     }
-    return this.ioredis.set(this.key, number);
+    return super.set(number);
   }
 
   async get() {
-    const value = await this.ioredis.get(this.key);
+    const value = await super.get();
     return value === null ? undefined : Number(value);
   }
 
   async inc(number = 1) {
-    if (!lodash.isNumber(number)) {
-      throw new Error(`inc value must be a number, got ${number}`);
+    if (!Number.isFinite(number)) {
+      throw new Error(`expect a finite number, got ${number}`);
     }
 
     const value = Number.isInteger(number)

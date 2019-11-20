@@ -33,8 +33,8 @@ class HashTableValue extends Value {
    * @return {Promise<number>} after number
    */
   async inc(key, number = 1) {
-    if (!lodash.isNumber(number)) {
-      throw new Error(`inc value must be a number, got ${number}`);
+    if (!Number.isFinite(number)) {
+      throw new Error(`expect a finite number, got ${number}`);
     }
 
     const value = Number.isInteger(number)
@@ -57,23 +57,34 @@ class HashTableValue extends Value {
     let object;
 
     if (fields === undefined) {
-      object = await this.ioredis.hgetall(this.key);
-    } else if (lodash.isArray(fields)) { // XXX: is the necessary
-      const keys = fields;
-      const values = keys.length ? await this.ioredis.hmget(this.key, keys) : []; // ioredis 'hmget' keys can not be empty
-      object = lodash.pickBy(lodash.zipObject(keys, values), v => v !== null); // ioredis use null as undefined
-    } else if (lodash.isPlainObject(fields)) {
-      const keys = Object.keys(fields).filter(k => fields[k] === true);
-      const values = keys.length ? await this.ioredis.hmget(this.key, keys) : []; // ioredis 'hmget' keys can not be empty
-      object = lodash.pickBy(lodash.zipObject(keys, values), v => v !== null); // redis use null as undefined
-    } else {
-      throw new Error(`unknown fields type, fields=${fields}`);
+      return this.ioredis.hgetall(this.key);
     }
 
-    if (!Object.keys(object).length && !(await this.ioredis.exists(this.key))) {
-      return undefined;
+    if (Array.isArray(fields)) {
+      const keys = fields;
+
+      // 'hmget' keys can not be empty
+      const values = keys.length
+        ? await this.ioredis.hmget(this.key, keys)
+        : [];
+
+      object = lodash.zipObject(keys, values);
+      return lodash.pickBy(object, v => v !== null); // redis use `null` as `undefined`
     }
-    return object;
+
+    if (lodash.isPlainObject(fields)) {
+      const keys = Object.keys(fields).filter(k => Boolean(fields[k]));
+
+      // 'hmget' keys can not be empty
+      const values = keys.length
+        ? await this.ioredis.hmget(this.key, keys)
+        : [];
+
+      object = lodash.zipObject(keys, values);
+      return lodash.pickBy(object, v => v !== null); // redis use `null` as `undefined`
+    }
+
+    throw new Error(`unknown fields type, fields=${fields}`);
   }
 }
 

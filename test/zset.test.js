@@ -7,6 +7,9 @@ beforeAll(async () => {
 test('ZSet', async () => {
   const zset = redis.root.ZSet('zset');
 
+  expect(await zset.exists()).toEqual(false);
+  expect(await zset.select()).toEqual({});
+
   expect(await zset.index(0)).toEqual(undefined);
   expect(await zset.index(-1)).toEqual(undefined);
   expect(await zset.indexScore(0)).toEqual(undefined);
@@ -46,7 +49,7 @@ test('ZSet', async () => {
   expect(await zset.select({ min: 2, max: 3, skip: 1 })).toEqual({ 'C`': 2, D: 3 });
   expect(await zset.select({ min: 2, max: 3, limit: 2, reverse: true })).toEqual({ D: 3, 'C`': 2 });
 
-  await expect(zset.delScore()).rejects.toThrow('scope must be a number');
+  await expect(zset.delScore()).rejects.toThrow('expect a finite number');
 
   expect(await zset.delScore(4)).toEqual(2);
   expect(await zset.slice(0)).toEqual(['A', 'B', 'C', 'C`', 'D', 'F']);
