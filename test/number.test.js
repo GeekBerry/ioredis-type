@@ -7,7 +7,7 @@ beforeAll(async () => {
 test('Number', async () => {
   const number = redis.root.Number('number');
 
-  expect(await number.exists()).toEqual(false);
+  expect(await number.exist()).toEqual(false);
   expect(await number.get()).toEqual(undefined);
 
   await expect(number.set('100')).rejects.toThrow('expect a finite number');

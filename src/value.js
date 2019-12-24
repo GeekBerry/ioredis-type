@@ -10,7 +10,7 @@ class Value extends Type {
     return this.ioredis.get(this.key);
   }
 
-  async exists() {
+  async exist() {
     return Boolean(await this.ioredis.exists(this.key));
   }
 

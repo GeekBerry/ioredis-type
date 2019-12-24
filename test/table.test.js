@@ -7,11 +7,11 @@ beforeAll(async () => {
 test('Table', async () => {
   const table = redis.root.Table('table');
 
-  expect(await table.exists()).toEqual(false);
+  expect(await table.exist()).toEqual(false);
   expect(await table.select()).toEqual({});
 
   expect(await table.insert()).toEqual(false);
-  expect(await table.exists()).toEqual(false);
+  expect(await table.exist()).toEqual(false);
 
   await table.insert({
     t: true,
@@ -22,7 +22,7 @@ test('Table', async () => {
     i: 0,
     a: ['A', 'B,C'],
   });
-  expect(await table.exists()).toEqual(true);
+  expect(await table.exist()).toEqual(true);
 
   const created = await table.select();
   expect(created.t).toEqual('true');

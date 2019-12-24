@@ -7,7 +7,7 @@ beforeAll(async () => {
 test('ZSet', async () => {
   const zset = redis.root.ZSet('zset');
 
-  expect(await zset.exists()).toEqual(false);
+  expect(await zset.exist()).toEqual(false);
   expect(await zset.select()).toEqual({});
 
   expect(await zset.index(0)).toEqual(undefined);
