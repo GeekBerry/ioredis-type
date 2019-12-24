@@ -4,6 +4,7 @@ const SortedSetValue = require('./zset');
 const HashTableValue = require('./table');
 const MapValue = require('./map');
 const NumberValue = require('./number');
+const BigNumberValue = require('./bigNumber');
 
 class DirectoryType extends Type {
   pathOf(key) {
@@ -43,6 +44,10 @@ class DirectoryType extends Type {
 
   Number(key) {
     return new NumberValue(this.ioredis, this.pathOf(key));
+  }
+
+  BigNumber(key) {
+    return new BigNumberValue(this.ioredis, this.pathOf(key));
   }
 }
 

@@ -16,6 +16,7 @@
     "yarn.lock"
   ],
   "dependencies": {
+    "bignumber.js": "^9.0.0",
     "ioredis": "^4.14.1",
     "lodash": "^4.17.15"
   },
