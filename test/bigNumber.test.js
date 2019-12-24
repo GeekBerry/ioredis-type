@@ -23,6 +23,7 @@ test('BigNumber', async () => {
   expect(await bigNumber.inc()).toEqual(BigNumber(101));
   expect(await bigNumber.inc(99)).toEqual(BigNumber(200));
   expect(await bigNumber.inc(-200.5)).toEqual(BigNumber(-0.5));
+  expect(await bigNumber.dec(-1)).toEqual(BigNumber(0.5));
 
   const value = BigNumber(-2 / 3 - 1e9).pow(11);
   expect(await bigNumber.set(value)).toEqual(true);

@@ -18,11 +18,11 @@ class NumberValue extends Value {
       throw new Error(`expect a finite number, got ${number}`);
     }
 
-    const value = Number.isInteger(number)
-      ? await this.ioredis.incrby(this.key, number)
-      : await this.ioredis.incrbyfloat(this.key, number);
+    return Number(await this.ioredis.incrbyfloat(this.key, number));
+  }
 
-    return Number(value);
+  async dec(number) {
+    return this.inc(-number);
   }
 }
 

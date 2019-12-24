@@ -18,6 +18,7 @@ test('Number', async () => {
   expect(await number.inc()).toEqual(101);
   expect(await number.inc(99)).toEqual(200);
   expect(await number.inc(-200.5)).toEqual(-0.5);
+  expect(await number.dec(-1)).toEqual(0.5);
 });
 
 afterAll(() => {

@@ -4,7 +4,8 @@ const Value = require('./value');
 const REGEX = /^0x(-)?[0-9a-f]+(\.[0-9a-f]+)?$/;
 
 /*
- starts with '0x' to difference from redis number
+ - starts with '0x' to difference from redis number
+ - it is difficulty to replace dec with inc negative in some case, support both of them here
  */
 class BigNumberValue extends Value {
   async set(value) {
@@ -31,6 +32,14 @@ class BigNumberValue extends Value {
     // TODO update by transaction
     let bigNumber = await this.get() || BigNumber(0);
     bigNumber = bigNumber.plus(value);
+    await this.set(bigNumber);
+    return bigNumber;
+  }
+
+  async dec(value = 1) {
+    // TODO update by transaction
+    let bigNumber = await this.get() || BigNumber(0);
+    bigNumber = bigNumber.minus(value);
     await this.set(bigNumber);
     return bigNumber;
   }
