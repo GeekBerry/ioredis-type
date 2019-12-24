@@ -10,6 +10,10 @@ test('BigNumber', async () => {
 
   expect(await bigNumber.exist()).toEqual(false);
   expect(await bigNumber.get()).toEqual(undefined);
+  expect(await bigNumber.inc()).toEqual(BigNumber(1));
+
+  await redis.set(bigNumber.key, 'qwert');
+  await expect(bigNumber.get()).rejects.toThrow('expect a to match');
 
   await expect(bigNumber.set(null)).rejects.toThrow('expect a finite bigNumber');
   expect(await bigNumber.set(100)).toEqual(true);
